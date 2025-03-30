@@ -1,3 +1,8 @@
+ates/shop/index.html
++3
+-31
+Original file line number	Diff line number	Diff line change
+@@ -1,118 +1,90 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +18,7 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Shop</a>
+            <a class="navbar-brand" href="#">Vendora</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -23,13 +28,16 @@
                     <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
                     <li class="nav-item">
                         <button id="cart" type="button" class="btn btn-secondary" data-toggle="popover" data-placement="bottom">
-                            Cart (0)
+                            Cart
                         </button>
                     </li>
+                    <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin">Admin Page</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/cart">Cart</a></li>
                 </ul>
             </div>
         </nav>
-        
+
         <div class="row mt-3">
             <div class="col-md-12">
                 <form class="card card-sm">
@@ -44,7 +52,7 @@
                 </form>
             </div>
         </div>
-        
+
         <div class="row mt-4">
             {% for product in product_objects %}
             <div class="col-md-3 mb-4">
@@ -60,7 +68,7 @@
             </div>
             {% endfor %}
         </div>
-        
+
         <div class="row">
             <div class="col-md-3 offset-md-4">
                 <ul class="pagination">
@@ -80,7 +88,7 @@
         $(document).ready(function () {
             let cart = JSON.parse(localStorage.getItem('cart')) || {};
             updateCartButton();
-            
+
             $(document).on('click', '.atc', function () {
                 let item_id = this.id;
                 let quantity = cart[item_id] ? cart[item_id].quantity + 1 : 1;
@@ -90,27 +98,24 @@
                 localStorage.setItem('cart', JSON.stringify(cart));
                 updateCartButton();
             });
-
             function updateCartButton() {
                 let cartItems = Object.keys(cart).length;
-                $("#cart").html(Cart (${cartItems}));
+                $("#cart").html(`Cart (${cartItems})`);
                 updateCartPopover();
             }
-
             function updateCartPopover() {
                 let cartString = "<h5>Your Cart</h5>";
                 for (let item in cart) {
-                    cartString += <p>${cart[item].name} - Qty: ${cart[item].quantity} - $${cart[item].price.toFixed(2)}</p>;
+                    cartString += `<p>${cart[item].name} - Qty: ${cart[item].quantity} - $${cart[item].price.toFixed(2)}</p>`;
                 }
                 cartString += "<a href='/checkout' class='btn btn-warning mt-2'>Checkout</a>";
                 $("#cart").attr('data-content', cartString);
-                $("[data-toggle='popover']").popover({
+               $("[data-toggle='popover']").popover({
     html: true,
     content: function () {
         return $("#cart").attr("data-content");
     }
 });
-
             }
         });
     </script>
