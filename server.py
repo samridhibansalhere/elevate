@@ -1,1 +1,1 @@
-from vendora.wsgi import application
+from elevate.wsgi import application
