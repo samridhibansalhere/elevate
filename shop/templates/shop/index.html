@@ -104,7 +104,13 @@
                 }
                 cartString += "<a href='/checkout' class='btn btn-warning mt-2'>Checkout</a>";
                 $("#cart").attr('data-content', cartString);
-                $("[data-toggle='popover']").popover('dispose').popover();
+               $("[data-toggle='popover']").popover({
+    html: true,
+    content: function () {
+        return $("#cart").attr("data-content");
+    }
+});
+
             }
         });
     </script>
